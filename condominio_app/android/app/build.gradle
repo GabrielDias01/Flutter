@@ -1,0 +1,45 @@
+plugins {
+    id "com.android.application"              // Plugin para aplicativos Android
+    id "kotlin-android"                       // Plugin para Kotlin no Android
+    id "dev.flutter.flutter-gradle-plugin"     // Plugin Flutter, necessário para integração com Android
+}
+
+android {
+    namespace = "com.example.condominio_app"  // Nome do pacote do seu aplicativo Android
+    compileSdk = flutter.compileSdkVersion    // Versão do SDK de compilação (definida pelo Flutter)
+
+    ndkVersion = flutter.ndkVersion          // Versão do NDK, necessária se você estiver usando código nativo
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8  // Definir a compatibilidade com Java 8
+        targetCompatibility = JavaVersion.VERSION_1_8  // Definir a compatibilidade com Java 8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8  // Garantir que o Kotlin use o JVM Target 1.8
+    }
+
+    defaultConfig {
+        applicationId = "com.example.condominio_app"  // ID único do seu aplicativo
+        minSdk = flutter.minSdkVersion                // Definir a versão mínima do SDK Android
+        targetSdk = flutter.targetSdkVersion          // Definir a versão do SDK Android alvo
+        versionCode = flutter.versionCode              // Código da versão do aplicativo
+        versionName = flutter.versionName              // Nome da versão do seu app
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug // Usando a configuração de debug para o momento, você precisa adicionar a sua própria configuração de release
+        }
+    }
+
+    // Se você estiver usando Firebase, adicione a configuração aqui
+    // Firebase é integrado com o plugin 'com.google.gms.google-services' no final
+}
+
+flutter {
+    source = "../.."  // Caminho para o diretório Flutter, geralmente não precisa ser modificado
+}
+
+// Agora adicionamos o plugin do Firebase para integração
+apply plugin: 'com.google.gms.google-services'  // Aplica o plugin do Google Services para o Firebase

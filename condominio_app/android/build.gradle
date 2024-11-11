@@ -1,0 +1,39 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        // Repositórios onde o Gradle irá procurar as dependências
+        google()       // Repositório do Google para dependências Android e Firebase
+        mavenCentral() // Repositório Maven Central para dependências gerais
+    }
+    dependencies {
+        // Dependências do Gradle
+        classpath 'com.android.tools.build:gradle:8.0.0'  // Versão do plugin Android
+        classpath 'com.google.gms:google-services:4.3.15' // Plugin do Google para Firebase
+        // Outras dependências do Gradle podem ser adicionadas aqui
+    }
+}
+
+allprojects {
+    repositories {
+        google()       // Repositório do Google
+        mavenCentral() // Repositório Maven Central
+    }
+}
+
+rootProject.buildDir = "../build"  // Define o diretório de build principal
+
+subprojects {
+    // Define o diretório de build para cada subprojeto
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+
+subprojects {
+    // Garante que a avaliação do subprojeto depende da avaliação do módulo ":app"
+    project.evaluationDependsOn(":app")
+}
+
+// Tarefa personalizada para limpar o diretório de build
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir  // Deleta o diretório de build principal
+}
